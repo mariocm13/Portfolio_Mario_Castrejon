@@ -3,80 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mario Castrejón Martín — Portfolio</title>
+  <title>Mario Castrejón Martín — Portafolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --green-dark:   #085041;
-      --green-mid:    #0F6E56;
-      --green:        #1D9E75;
-      --green-light:  #9FE1CB;
-      --green-pale:   #E1F5EE;
-      --text:         #1a1a18;
-      --text-muted:   #6b6b66;
-      --border:       rgba(0,0,0,0.10);
-      --bg:           #fafaf8;
-      --bg-card:      #ffffff;
-      --radius:       12px;
-      --radius-sm:    8px;
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
     }
 
-    html { scroll-behavior: smooth; }
+    :root {
+      --bg-dark:      #0f0f12;
+      --bg-secondary: #1a1a1f;
+      --bg-hover:     rgba(0, 217, 255, 0.05);
+      
+      --cyan:         #00d9ff;
+      --lime:         #00ff88;
+      --magenta:      #ff006e;
+      
+      --text-primary:   #f5f5f7;
+      --text-secondary: #b0b0b8;
+      --border:         rgba(0, 217, 255, 0.15);
+      --border-hover:   rgba(0, 217, 255, 0.3);
+      
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    html { 
+      scroll-behavior: smooth; 
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan) transparent;
+    }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
+      color: var(--text-primary);
       font-size: 16px;
       line-height: 1.6;
+      min-height: 100vh;
     }
 
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2.5rem;
-      height: 60px;
-      background: rgba(250,250,248,0.88);
+      padding: 1rem 2.5rem;
+      height: 70px;
+      background: rgba(15, 15, 18, 0.8);
       backdrop-filter: blur(12px);
-      border-bottom: 0.5px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: var(--text);
+      background: linear-gradient(135deg, var(--cyan), var(--lime));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-decoration: none;
+      letter-spacing: 1px;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
     .nav-links a {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.15s;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
-    .nav-links a:hover { color: var(--green); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--lime));
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
 
     /* ── SECTIONS ── */
-    section { padding: 6rem 2.5rem; max-width: 900px; margin: 0 auto; }
+    section { 
+      padding: 6rem 2.5rem; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+    }
 
     /* ── HERO ── */
     #hero {
@@ -85,161 +130,292 @@
       flex-direction: column;
       justify-content: center;
       padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
     }
 
     .available-badge {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--green-mid);
-      background: var(--green-pale);
-      border: 0.5px solid var(--green-light);
-      padding: 5px 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--lime);
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      padding: 6px 14px;
       border-radius: 20px;
       margin-bottom: 1.5rem;
       width: fit-content;
+      text-transform: uppercase;
     }
 
     .available-dot {
-      width: 7px; height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s infinite;
+      background: var(--lime);
+      animation: pulse-dot 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.8); }
+    @keyframes pulse-dot {
+      0%, 100% { 
+        opacity: 1; 
+        transform: scale(1); 
+        box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+      }
+      50% { 
+        opacity: 0.6; 
+        transform: scale(0.9); 
+      }
     }
 
     h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
       font-weight: 700;
-      line-height: 1.03;
-      letter-spacing: -0.025em;
-      margin-bottom: 1rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--cyan), var(--lime));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .hero-sub {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
+    .hero-subtitle {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--text-secondary);
       margin-bottom: 1.5rem;
     }
 
     .hero-desc {
       max-width: 560px;
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      line-height: 1.75;
-      margin-bottom: 2.5rem;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 2rem;
     }
 
     .hero-contacts {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2rem;
+      gap: 1.5rem;
       margin-bottom: 2.5rem;
     }
 
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
     }
 
     .contact-dot {
-      width: 5px; height: 5px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--green);
+      background: var(--cyan);
     }
 
-    .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 10px 20px;
-      border-radius: var(--radius-sm);
+      justify-content: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
       text-decoration: none;
-      border: 0.5px solid var(--border);
-      color: var(--text);
-      background: transparent;
-      transition: all 0.15s;
+      border: 1.5px solid transparent;
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn:hover { background: #f0f0ec; }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 217, 255, 0.1);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      left: 0;
+    }
+
+    .btn:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
 
     .btn-primary {
-      background: var(--green-mid);
-      color: #fff;
-      border-color: var(--green-mid);
+      background: linear-gradient(135deg, var(--cyan), var(--lime));
+      color: var(--bg-dark);
+      border-color: transparent;
     }
 
-    .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+    .btn-primary:hover {
+      box-shadow: 0 8px 24px rgba(0, 217, 255, 0.3);
+      transform: translateY(-4px);
+    }
+
+    @media (max-width: 768px) {
+      #hero { padding-top: 100px; }
+      .hero-grid { grid-template-columns: 1fr; }
+    }
 
     /* ── SECTION LABEL ── */
     .section-label {
       font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
+      font-weight: 600;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.6rem;
+      color: var(--cyan);
+      margin-bottom: 0.8rem;
     }
 
     .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 2.5rem;
-      line-height: 1.1;
+      line-height: 1.2;
     }
 
     hr.divider {
       border: none;
-      border-top: 0.5px solid var(--border);
-      margin: 0;
+      border-top: 1px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    /* ── BENTO GRID ── */
+    .about-section {
+      padding: 4rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .bento-item {
+      padding: 1.75rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bento-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .bento-item:hover::before {
+      left: 100%;
+    }
+
+    .bento-item:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+    }
+
+    .bento-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: var(--text-primary);
+    }
+
+    .bento-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     /* ── PROJECTS ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
 
     .project-card {
-      background: var(--bg-card);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
     .project-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+      border-color: var(--border-hover);
+      background: var(--bg-hover);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(0, 217, 255, 0.2);
     }
 
     .project-video-wrap {
       width: 100%;
       aspect-ratio: 16/9;
-      background: #111;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 255, 136, 0.05));
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .project-video-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 1rem;
     }
 
     .project-video-wrap iframe {
@@ -248,192 +424,250 @@
       border: none;
     }
 
-    .project-body { padding: 1.25rem; }
+    .project-body {
+      padding: 1.5rem;
+    }
 
     .project-tag {
       display: inline-block;
       font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.07em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--green-mid);
-      background: var(--green-pale);
-      padding: 3px 8px;
-      border-radius: 20px;
-      margin-bottom: 0.6rem;
+      color: var(--cyan);
+      background: rgba(0, 217, 255, 0.15);
+      padding: 4px 10px;
+      border-radius: 16px;
+      margin-bottom: 0.8rem;
     }
 
     .project-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
       font-weight: 700;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.6rem;
       line-height: 1.3;
+      color: var(--text-primary);
     }
 
     .project-desc {
-      font-size: 0.83rem;
-      color: var(--text-muted);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
       line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-link {
+      display: inline-block;
+      padding: 8px 16px;
+      background: rgba(0, 217, 255, 0.15);
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .project-link:hover {
+      background: var(--cyan);
+      color: var(--bg-dark);
+      transform: translateX(4px);
     }
 
     /* ── SKILLS ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
     }
 
     .skill-card {
-      background: var(--bg-card);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
       padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .skill-card:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-hover);
+      transform: translateY(-4px);
     }
 
     .skill-card h3 {
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-size: 0.85rem;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
     }
 
     .skill-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .skill-row:last-child { margin-bottom: 0; }
+    .skill-row:last-child {
+      margin-bottom: 0;
+    }
 
     .skill-name {
-      font-size: 0.82rem;
-      min-width: 110px;
+      font-size: 0.9rem;
+      min-width: 100px;
+      font-weight: 500;
     }
 
     .skill-bar {
       flex: 1;
       height: 3px;
-      background: #ebebea;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 2px;
       overflow: hidden;
     }
 
     .skill-fill {
       height: 100%;
-      background: var(--green);
+      background: linear-gradient(90deg, var(--cyan), var(--lime));
       border-radius: 2px;
     }
 
     .skill-lv {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      min-width: 50px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      min-width: 55px;
       text-align: right;
+      font-weight: 500;
     }
 
     /* ── EXPERIENCE ── */
     .exp-item {
       display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 1.5rem;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
       padding: 2rem 0;
-      border-bottom: 0.5px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
     }
 
-    .exp-item:last-child { border-bottom: none; }
+    .exp-item:last-child {
+      border-bottom: none;
+    }
+
+    .exp-item:hover {
+      padding-left: 1rem;
+    }
 
     .exp-date {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      padding-top: 3px;
+      font-size: 0.8rem;
+      color: var(--cyan);
+      font-weight: 600;
+      padding-top: 2px;
     }
 
     .exp-role {
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 3px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-primary);
     }
 
     .exp-org {
-      font-size: 0.82rem;
-      color: var(--green-mid);
-      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--lime);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
     }
 
     .exp-tasks {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
 
     .exp-tasks li {
-      font-size: 0.83rem;
-      color: var(--text-muted);
-      padding-left: 14px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding-left: 16px;
       position: relative;
+      line-height: 1.6;
     }
 
     .exp-tasks li::before {
       content: '';
       position: absolute;
-      left: 0; top: 8px;
-      width: 5px; height: 5px;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: var(--green-light);
+      background: var(--cyan);
+    }
+
+    @media (max-width: 768px) {
+      .exp-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
     }
 
     /* ── CONTACT ── */
     #contacto {
-      background: var(--green-dark);
-      color: #fff;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(0, 255, 136, 0.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
       max-width: 100%;
-      padding: 5rem 2.5rem;
+      padding: 4rem 2.5rem;
       text-align: center;
+      margin: 0;
     }
 
-    #contacto .section-label { color: var(--green-light); }
-
-    #contacto .section-title { color: #fff; margin-bottom: 1rem; }
-
-    #contacto p { color: rgba(255,255,255,0.65); margin-bottom: 2rem; font-size: 1rem; }
-
-    #contacto .btn {
-      border-color: rgba(255,255,255,0.25);
-      color: #fff;
+    #contacto .section-label {
+      color: var(--lime);
     }
 
-    #contacto .btn:hover { background: rgba(255,255,255,0.1); }
-
-    #contacto .btn-primary {
-      background: var(--green);
-      border-color: var(--green);
-      color: #fff;
+    #contacto .section-title {
+      color: var(--text-primary);
     }
 
-    #contacto .btn-primary:hover { background: var(--green-mid); }
+    #contacto p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+
+    #contacto .btn-row {
+      justify-content: center;
+    }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--green-dark);
-      border-top: 0.5px solid rgba(255,255,255,0.08);
+      background: rgba(15, 15, 18, 0.5);
+      border-top: 1px solid var(--border);
       text-align: center;
-      padding: 1.5rem;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.35);
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 4rem;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      nav { padding: 0 1.25rem; }
-      nav .nav-links { display: none; }
-      section { padding: 4rem 1.25rem; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.25rem; }
+    /* Responsive */
+    @media (max-width: 1024px) {
+      section { padding: 4rem 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 3rem 1.5rem; }
       .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -443,6 +677,7 @@
   <nav>
     <a class="nav-logo" href="#hero">MC</a>
     <ul class="nav-links">
+      <li><a href="#sobre-mi">Sobre mí</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
       <li><a href="#experiencia">Experiencia</a></li>
       <li><a href="#habilidades">Habilidades</a></li>
@@ -452,25 +687,76 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="available-badge">
-      <span class="available-dot"></span>
-      Disponibilidad inmediata
+    <div class="hero-grid">
+      <div>
+        <div class="available-badge">
+          <span class="available-dot"></span>
+          Disponibilidad inmediata
+        </div>
+        <h1>Mario<br>Castrejón<br>Martín</h1>
+        <p class="hero-subtitle">Administrativo · Asistente de Dirección</p>
+        <p class="hero-desc">
+          Técnico Superior en Asistencia a la Dirección con formación en Gestión Administrativa.
+          Competente en gestión documental, soporte directivo y atención al cliente.
+          Inglés B2 y dominio avanzado del paquete Office.
+        </p>
+        <div class="hero-contacts">
+          <span class="contact-item">
+            <span class="contact-dot"></span>
+            mariocastrejonm@gmail.com
+          </span>
+          <span class="contact-item">
+            <span class="contact-dot"></span>
+            653 06 81 71
+          </span>
+          <span class="contact-item">
+            <span class="contact-dot"></span>
+            Toledo, España
+          </span>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#contacto">Contactar →</a>
+          <a class="btn" href="#proyectos">Ver proyectos</a>
+        </div>
+      </div>
     </div>
-    <h1>Mario<br>Castrejón<br>Martín</h1>
-    <p class="hero-sub">Administrativo · Asistente de Dirección</p>
-    <p class="hero-desc">
-      Técnico Superior en Asistencia a la Dirección con formación en Gestión Administrativa.
-      Competente en gestión documental, soporte directivo y atención al cliente.
-      Inglés B2 y dominio avanzado del paquete Office.
-    </p>
-    <div class="hero-contacts">
-      <span class="contact-item"><span class="contact-dot"></span>mariocastrejonm@gmail.com</span>
-      <span class="contact-item"><span class="contact-dot"></span>653 06 81 71</span>
-      <span class="contact-item"><span class="contact-dot"></span>Toledo, España</span>
-    </div>
-    <div class="btn-row">
-      <a class="btn btn-primary" href="#contacto">Contactar</a>
-      <a class="btn" href="#proyectos">Ver proyectos</a>
+  </section>
+
+  <!-- SOBRE MÍ -->
+  <section id="sobre-mi" class="about-section">
+    <p class="section-label">Acerca de</p>
+    <h2 class="section-title">¿Quién soy?</h2>
+    
+    <div class="bento-grid">
+      <div class="bento-item">
+        <div class="bento-title">📚 Formación</div>
+        <div class="bento-desc">Técnico Superior en Asistencia a la Dirección (2022-2024) y Técnico en Gestión Administrativa (2020-2022). Especialización en Office y gestión empresarial.</div>
+      </div>
+
+      <div class="bento-item">
+        <div class="bento-title">🎯 Especialidad</div>
+        <div class="bento-desc">Gestión documental, organización de eventos, comunicación empresarial, soporte directivo y atención al cliente de calidad.</div>
+      </div>
+
+      <div class="bento-item">
+        <div class="bento-title">🌐 Idiomas</div>
+        <div class="bento-desc">Español nativo. Inglés B2 con certificación y capacidad de comunicación profesional fluida.</div>
+      </div>
+
+      <div class="bento-item">
+        <div class="bento-title">💻 Tecnología</div>
+        <div class="bento-desc">Dominio avanzado de Office (Word, Excel, Outlook, PowerPoint). Experiencia con tramites online, IA generativa y herramientas de automatización.</div>
+      </div>
+
+      <div class="bento-item">
+        <div class="bento-title">🎓 Experiencia</div>
+        <div class="bento-desc">Administrativo en Colegio de Gestores Administrativos (Talavera de la Reina, 2024). Gestión de documentación, atención al cliente y tramitación administrativa.</div>
+      </div>
+
+      <div class="bento-item">
+        <div class="bento-title">📍 Ubicación</div>
+        <div class="bento-desc">Toledo, España. Disponible para oportunidades presenciales, híbridas y 100% remotas a nivel nacional e internacional.</div>
+      </div>
     </div>
   </section>
 
@@ -478,27 +764,27 @@
 
   <!-- PROYECTOS -->
   <section id="proyectos">
-    <p class="section-label">Proyectos</p>
-    <h2 class="section-title">Lo que he creado</h2>
+    <p class="section-label">Portafolio</p>
+    <h2 class="section-title">Proyectos destacados</h2>
 
     <div class="projects-grid">
 
-      <!-- Proyecto: Nutrition GPT -->
+      <!-- NutrIA -->
       <div class="project-card">
-        <div class="project-video-wrap" style="background: linear-gradient(135deg, #1D9E75 0%, #0F6E56 100%); display: flex; align-items: center; justify-content: center;">
-          <img src="NutrIALogo.png" alt="Nutrition GPT Logo" style="width: 80%; height: 80%; object-fit: contain;">
+        <div class="project-video-wrap">
+          <img src="https://raw.githubusercontent.com/mariocm13/nutrition-gpt/main/NutrIALogo.png" alt="NutrIA Logo" />
         </div>
         <div class="project-body">
-          <span class="project-tag">Aplicación · IA</span>
-          <p class="project-title">NutrIA</p>
+          <span class="project-tag">Aplicación · IA · Python</span>
+          <h3 class="project-title">NutrIA</h3>
           <p class="project-desc">
-            Asistente inteligente de nutrición impulsado por IA. Obtén recomendaciones personalizadas y análisis nutricionales.
+            Asistente inteligente de nutrición impulsado por IA. Proporciona recomendaciones personalizadas y análisis nutricionales basados en Claude API.
           </p>
-          <a href="https://nutrition-gpt.onrender.com/" target="_blank" style="display: inline-block; margin-top: 1rem; padding: 8px 16px; background: var(--green-mid); color: white; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: background 0.15s;" onmouseover="this.style.background='var(--green-dark)'" onmouseout="this.style.background='var(--green-mid)'">Visitar Aplicación →</a>
+          <a href="https://nutrition-gpt.onrender.com/" target="_blank" class="project-link">Visitar aplicación →</a>
         </div>
       </div>
 
-      <!-- Proyecto: Vídeo YouTube -->
+      <!-- Video Portfolio -->
       <div class="project-card">
         <div class="project-video-wrap">
           <iframe 
@@ -509,11 +795,12 @@
           </iframe>
         </div>
         <div class="project-body">
-          <span class="project-tag">Vídeo · YouTube</span>
-          <p class="project-title">Presentación de Proyecto</p>
+          <span class="project-tag">Vídeo · Presentación · YouTube</span>
+          <h3 class="project-title">Presentación Audiovisual</h3>
           <p class="project-desc">
-            Visualización de mis capacidades y proyectos a través de contenido en video.
+            Visualización audiovisual de mis capacidades, proyectos y trayectoria profesional a través de contenido en vídeo de calidad.
           </p>
+          <a href="https://www.youtube.com/watch?v=b-hrqT68w6A" target="_blank" class="project-link">Ver vídeo →</a>
         </div>
       </div>
 
@@ -578,27 +865,27 @@
         <h3>Herramientas Office</h3>
         <div class="skill-row">
           <span class="skill-name">Word</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
           <span class="skill-lv">Avanzado</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Excel</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
           <span class="skill-lv">Avanzado</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Outlook</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
           <span class="skill-lv">Avanzado</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">PowerPoint</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
           <span class="skill-lv">Avanzado</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Access</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:35%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 35%;"></div></div>
           <span class="skill-lv">Básico</span>
         </div>
       </div>
@@ -607,12 +894,12 @@
         <h3>Idiomas</h3>
         <div class="skill-row">
           <span class="skill-name">Español</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 100%;"></div></div>
           <span class="skill-lv">Nativo</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Inglés</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 72%;"></div></div>
           <span class="skill-lv">B2</span>
         </div>
       </div>
@@ -621,22 +908,22 @@
         <h3>Competencias personales</h3>
         <div class="skill-row">
           <span class="skill-name">Organización</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
           <span class="skill-lv">Alta</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Atención al detalle</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
           <span class="skill-lv">Alta</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Comunicación</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 88%;"></div></div>
           <span class="skill-lv">Alta</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Adaptabilidad</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
           <span class="skill-lv">Alta</span>
         </div>
       </div>
@@ -645,17 +932,17 @@
         <h3>Tecnología y herramientas</h3>
         <div class="skill-row">
           <span class="skill-name">Trámites online</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
           <span class="skill-lv">Avanzado</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">IA generativa</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 75%;"></div></div>
           <span class="skill-lv">Medio</span>
         </div>
         <div class="skill-row">
           <span class="skill-name">Automatización</span>
-          <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width: 65%;"></div></div>
           <span class="skill-lv">Medio</span>
         </div>
       </div>
@@ -666,16 +953,40 @@
   <section id="contacto">
     <p class="section-label">Contacto</p>
     <h2 class="section-title">Hablemos</h2>
-    <p>¿Tienes una oferta o propuesta? Estoy disponible de inmediato.</p>
-    <div class="btn-row" style="justify-content:center">
-      <a class="btn btn-primary" href="mailto:mariocastrejonm@gmail.com">Enviar correo</a>
-      <a class="btn" href="tel:+34653068171">653 06 81 71</a>
+    <p>¿Tienes una oferta o propuesta? Estoy disponible de inmediato para discutir nuevas oportunidades.</p>
+    <div class="btn-row" style="justify-content: center;">
+      <a class="btn btn-primary" href="mailto:mariocastrejonm@gmail.com">Enviar correo →</a>
+      <a class="btn" href="tel:+34653068171">Llamar · 653 06 81 71</a>
     </div>
   </section>
 
   <footer>
     © 2026 Mario Castrejón Martín · Toledo, España
   </footer>
+
+  <script>
+    // Animación suave de scroll
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href");
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    });
+
+    // Efecto hover en experiencia
+    document.querySelectorAll(".exp-item").forEach((item) => {
+      item.addEventListener("mouseenter", () => {
+        item.style.paddingLeft = "1rem";
+      });
+      item.addEventListener("mouseleave", () => {
+        item.style.paddingLeft = "0";
+      });
+    });
+  </script>
 
 </body>
 </html>
