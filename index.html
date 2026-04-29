@@ -3,989 +3,1346 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mario Castrejón Martín — Portafolio</title>
+  <title>Mario Castrejón Martín — Atelier Administrativo</title>
+  <meta name="description" content="Portfolio de Mario Castrejón Martín · Técnico Superior en Asistencia a la Dirección · Toledo, España" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <style>
-    *, *::before, *::after { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-    }
+    /* ─────────────────────────────
+       RESET + TOKENS
+       ───────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-dark:      #0f0f12;
-      --bg-secondary: #1a1a1f;
-      --bg-hover:     rgba(0, 217, 255, 0.05);
-      
-      --cyan:         #00d9ff;
-      --lime:         #00ff88;
-      --magenta:      #ff006e;
-      
-      --text-primary:   #f5f5f7;
-      --text-secondary: #b0b0b8;
-      --border:         rgba(0, 217, 255, 0.15);
-      --border-hover:   rgba(0, 217, 255, 0.3);
-      
-      --radius-md: 8px;
-      --radius-lg: 12px;
+      /* Atelier palette — parchment + forest + bronze */
+      --paper:        #F2EDE0;
+      --paper-warm:   #EBE5D4;
+      --ink:          #15201B;
+      --ink-soft:     #3A4540;
+      --ink-mute:     #6F7470;
+      --rule:         #1520201A;
+      --forest:       #1A3A2E;
+      --forest-deep:  #0E241B;
+      --sage:         #7A9580;
+      --bronze:       #A87C4F;
+      --bronze-soft:  #C8A77A;
+      --cream:        #FCFAF2;
+      --shadow:       0 1px 0 rgba(21,32,27,.04), 0 30px 60px -30px rgba(21,32,27,.18);
+
+      --display: 'Fraunces', 'Times New Roman', serif;
+      --sans:    'Schibsted Grotesk', system-ui, -apple-system, sans-serif;
+      --mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
     }
 
-    html { 
-      scroll-behavior: smooth; 
-      scrollbar-width: thin;
-      scrollbar-color: var(--cyan) transparent;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-secondary) 100%);
-      color: var(--text-primary);
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
       font-size: 16px;
-      line-height: 1.6;
-      min-height: 100vh;
+      line-height: 1.55;
+      letter-spacing: -0.005em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
     }
 
-    /* ── NAV ── */
-    nav {
+    /* Subtle paper grain (SVG noise) */
+    body::before {
+      content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2.5rem;
-      height: 70px;
-      background: rgba(15, 15, 18, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      mix-blend-mode: multiply;
+      z-index: 1;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.13 0 0 0 0 0.10 0 0 0 0.045 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     }
 
-    .nav-logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--cyan), var(--lime));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
-      letter-spacing: 1px;
+    main, nav, footer { position: relative; z-index: 2; }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    ::selection { background: var(--forest); color: var(--paper); }
+
+    /* ─────────────────────────────
+       NAV
+       ───────────────────────────── */
+    nav.topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 18px clamp(1.25rem, 4vw, 3rem);
+      background: rgba(242,237,224,0.78);
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .crest {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: 1rem;
+      font-variation-settings: "opsz" 14, "SOFT" 50, "WONK" 1;
+      letter-spacing: -0.02em;
+    }
+    .crest .seal {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--bronze-soft), var(--bronze) 60%, var(--forest-deep) 110%);
+      box-shadow: inset 0 0 0 1px rgba(21,32,27,.18);
+    }
+    .crest small {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-left: 6px;
     }
 
     .nav-links {
-      display: flex;
-      gap: 2.5rem;
       list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: clamp(1rem, 3vw, 2.4rem);
     }
-
     .nav-links a {
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      position: relative;
+      color: var(--ink-soft);
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+      transition: border-color .25s ease, color .25s ease;
+    }
+    .nav-links a:hover { color: var(--forest); border-bottom-color: var(--bronze); }
+    .nav-links .num {
+      color: var(--bronze);
+      margin-right: 6px;
     }
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--cyan), var(--lime));
-      transition: width 0.3s ease;
+    .nav-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .nav-status .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--forest);
+      box-shadow: 0 0 0 4px rgba(26,58,46,.12);
+      animation: breathe 2.4s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(.7); opacity: .6; }
     }
 
-    .nav-links a:hover {
-      color: var(--cyan);
+    /* ─────────────────────────────
+       LAYOUT
+       ───────────────────────────── */
+    .shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 3rem);
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
+    section { padding: clamp(4.5rem, 9vw, 8rem) 0; position: relative; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      margin-bottom: clamp(2rem, 5vw, 4rem);
+      align-items: end;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      padding-top: 6px;
+      border-top: 1px solid var(--bronze);
+    }
+    .section-title {
+      font-family: var(--display);
+      font-weight: 350;
+      font-size: clamp(2.2rem, 5.4vw, 4.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+      color: var(--ink);
+    }
+    .section-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--forest);
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    }
+    .section-kicker {
+      grid-column: 2;
+      max-width: 540px;
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-top: 1rem;
     }
 
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-    }
-
-    /* ── SECTIONS ── */
-    section { 
-      padding: 6rem 2.5rem; 
-      max-width: 1200px; 
-      margin: 0 auto; 
-    }
-
-    /* ── HERO ── */
+    /* ─────────────────────────────
+       HERO
+       ───────────────────────────── */
     #hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 80px;
-      position: relative;
-      overflow: hidden;
+      padding-top: 130px;
+      padding-bottom: clamp(3rem, 6vw, 6rem);
+      display: grid;
+      grid-template-rows: 1fr auto;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 3rem;
-      align-items: center;
+      gap: 2rem;
+      position: relative;
     }
 
-    .available-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--lime);
-      background: rgba(0, 255, 136, 0.1);
-      border: 1px solid rgba(0, 255, 136, 0.3);
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 1.5rem;
-      width: fit-content;
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: var(--ink-mute);
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
     }
-
-    .available-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--lime);
-      animation: pulse-dot 2s infinite;
+    .hero-meta div span:first-child {
+      display: block;
+      color: var(--bronze);
+      margin-bottom: 4px;
+      font-size: 0.62rem;
     }
-
-    @keyframes pulse-dot {
-      0%, 100% { 
-        opacity: 1; 
-        transform: scale(1); 
-        box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
-      }
-      50% { 
-        opacity: 0.6; 
-        transform: scale(0.9); 
-      }
-    }
-
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, var(--cyan), var(--lime));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 1.1rem;
+    .hero-meta div span:last-child {
+      color: var(--ink);
+      font-family: var(--sans);
       font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+      font-size: 0.85rem;
+    }
+
+    h1.hero-name {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: clamp(3.4rem, 12vw, 9.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.045em;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+      max-width: 14ch;
+    }
+    h1.hero-name .accent {
+      font-style: italic;
+      font-weight: 350;
+      color: var(--forest);
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    }
+    h1.hero-name sup {
+      font-family: var(--mono);
+      font-size: 0.32em;
       letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
+      vertical-align: super;
+      color: var(--bronze);
+      margin-left: 4px;
+      font-weight: 400;
+    }
+
+    .hero-tagline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 14px;
+      margin-top: clamp(1.25rem, 3vw, 2rem);
+      font-family: var(--display);
+      font-weight: 350;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      color: var(--forest);
+      font-variation-settings: "opsz" 36, "SOFT" 80, "WONK" 1;
+    }
+    .hero-tagline .sep {
+      width: 38px; height: 1px;
+      background: var(--bronze);
+      display: inline-block;
+      transform: translateY(-6px);
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      margin-top: clamp(2.5rem, 6vw, 4.5rem);
+      align-items: end;
     }
 
     .hero-desc {
-      max-width: 560px;
-      font-size: 1rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 2rem;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      max-width: 46ch;
+    }
+    .hero-desc strong {
+      color: var(--ink);
+      font-weight: 600;
     }
 
-    .hero-contacts {
+    .hero-cta {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .contact-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 12px 24px;
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      border: 1.5px solid transparent;
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.08);
-      transition: all 0.3s ease;
+      gap: 12px;
+      padding: 14px 22px 14px 24px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      background: transparent;
+      border-radius: 999px;
+      transition: all .35s cubic-bezier(.2,.7,.2,1);
       cursor: pointer;
       position: relative;
       overflow: hidden;
     }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 217, 255, 0.1);
-      transition: left 0.3s ease;
-      z-index: -1;
+    .btn .arrow {
+      display: inline-block;
+      transition: transform .35s ease;
     }
-
-    .btn:hover::before {
-      left: 0;
-    }
-
-    .btn:hover {
-      border-color: var(--cyan);
-      transform: translateY(-2px);
-    }
+    .btn:hover { background: var(--ink); color: var(--paper); }
+    .btn:hover .arrow { transform: translateX(4px) rotate(-45deg); }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--lime));
-      color: var(--bg-dark);
-      border-color: transparent;
+      background: var(--forest);
+      color: var(--paper);
+      border-color: var(--forest);
     }
+    .btn-primary:hover { background: var(--forest-deep); border-color: var(--forest-deep); }
 
-    .btn-primary:hover {
-      box-shadow: 0 8px 24px rgba(0, 217, 255, 0.3);
-      transform: translateY(-4px);
-    }
-
-    @media (max-width: 768px) {
-      #hero { padding-top: 100px; }
-      .hero-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── SECTION LABEL ── */
-    .section-label {
+    .ghost-line {
+      font-family: var(--mono);
       font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 0.8rem;
+      color: var(--ink-mute);
     }
+    .ghost-line a { color: var(--forest); border-bottom: 1px solid var(--bronze); }
 
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 2.5rem;
-      line-height: 1.2;
-    }
-
-    hr.divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 3rem 0;
-    }
-
-    /* ── BENTO GRID ── */
-    .about-section {
-      padding: 4rem 2.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .bento-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .bento-item {
-      padding: 1.75rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      transition: all 0.3s ease;
-      position: relative;
+    /* ─────────────────────────────
+       MARQUEE
+       ───────────────────────────── */
+    .marquee {
       overflow: hidden;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper-warm);
+      padding: 22px 0;
+      margin-top: clamp(2rem, 5vw, 4rem);
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 2.5rem;
+      white-space: nowrap;
+      animation: scroll 38s linear infinite;
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      color: var(--forest);
+      font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
+    }
+    .marquee-track span {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .marquee-track .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--bronze);
+      flex-shrink: 0;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
-    .bento-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
-      transition: left 0.5s ease;
-    }
-
-    .bento-item:hover::before {
-      left: 100%;
-    }
-
-    .bento-item:hover {
-      background: var(--bg-hover);
-      border-color: var(--border-hover);
-      transform: translateY(-6px);
-    }
-
-    .bento-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      color: var(--text-primary);
-    }
-
-    .bento-desc {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* ── PROJECTS ── */
+    /* ─────────────────────────────
+       PROJECTS
+       ───────────────────────────── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(12, 1fr);
       gap: 1.5rem;
-      margin-top: 2rem;
     }
-
-    .project-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+    .project {
+      grid-column: span 6;
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease;
       position: relative;
     }
+    .project.feature { grid-column: span 12; display: grid; grid-template-columns: 1.15fr .85fr; }
+    .project:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 
-    .project-card:hover {
-      border-color: var(--border-hover);
-      background: var(--bg-hover);
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0, 217, 255, 0.2);
-    }
-
-    .project-video-wrap {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 255, 136, 0.05));
+    .project-media {
+      aspect-ratio: 16/10;
+      background: var(--forest-deep);
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: relative;
     }
+    .project.feature .project-media { aspect-ratio: auto; min-height: 460px; }
+    .project-media img,
+    .project-media iframe {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border: 0;
+      display: block;
+      transition: transform 1.2s cubic-bezier(.2,.7,.2,1);
+    }
+    .project:hover .project-media img { transform: scale(1.03); }
 
-    .project-video-wrap img {
-      width: 100%;
-      height: 100%;
+    .project-media.gradient-nutria {
+      background:
+        radial-gradient(110% 130% at 0% 0%, #2C7B5C 0%, transparent 60%),
+        radial-gradient(110% 130% at 100% 100%, #0E241B 0%, transparent 55%),
+        linear-gradient(135deg, #1A3A2E, #0E241B);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .project-media.gradient-nutria img {
+      width: 65%; height: 65%; object-fit: contain;
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,.45));
+      transition: transform .9s ease;
+    }
+    .project:hover .project-media.gradient-nutria img { transform: scale(1.04) rotate(-2deg); }
+
+    .project-media.flow {
+      background: linear-gradient(180deg, #FCFAF2 0%, #F2EDE0 100%);
+      padding: 28px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .project-media.flow img {
+      width: 100%; height: auto;
+      max-height: 100%;
       object-fit: contain;
-      padding: 1rem;
+      filter: drop-shadow(0 18px 36px rgba(21,32,27,.10));
     }
 
-    .project-video-wrap iframe {
+    /* YouTube thumbnail with play overlay */
+    .video-thumb {
+      position: relative;
+      display: block;
       width: 100%;
-      height: 100%;
-      border: none;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: #000;
+    }
+    .video-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 1.2s cubic-bezier(.2,.7,.2,1), filter .4s ease;
+    }
+    .video-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(14,36,27,.55) 100%);
+      pointer-events: none;
+    }
+    .video-thumb .play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(252,250,242,.92);
+      border: 1px solid rgba(21,32,27,.1);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 18px 36px rgba(0,0,0,.35);
+      transition: transform .35s cubic-bezier(.2,.7,.2,1), background .25s ease;
+      z-index: 2;
+    }
+    .video-thumb .play svg {
+      width: 22px; height: 22px;
+      fill: var(--forest-deep);
+      margin-left: 3px;
+    }
+    .project:hover .video-thumb img { transform: scale(1.05); filter: brightness(.85); }
+    .project:hover .video-thumb .play { transform: translate(-50%, -50%) scale(1.08); background: var(--bronze-soft); }
+    .video-thumb .label {
+      position: absolute;
+      bottom: 14px; left: 14px;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper);
+      padding: 6px 10px;
+      border: 1px solid rgba(242,237,224,.4);
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      background: rgba(14,36,27,.35);
+      z-index: 2;
     }
 
     .project-body {
-      padding: 1.5rem;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.5rem;
     }
 
-    .project-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+    .project-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--cyan);
-      background: rgba(0, 217, 255, 0.15);
+      color: var(--ink-mute);
+      margin-bottom: 0.9rem;
+    }
+    .project-meta-row .pill {
       padding: 4px 10px;
-      border-radius: 16px;
-      margin-bottom: 0.8rem;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      color: var(--forest);
+      background: rgba(122,149,128,.08);
     }
 
     .project-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      line-height: 1.3;
-      color: var(--text-primary);
+      font-family: var(--display);
+      font-weight: 350;
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      font-variation-settings: "opsz" 96, "SOFT" 50, "WONK" 1;
+      margin-bottom: 0.7rem;
+    }
+    .project-title em {
+      font-style: italic;
+      color: var(--forest);
+      font-weight: 300;
+      font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
+    }
+    .project-desc {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--ink-soft);
     }
 
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 1rem;
+    }
+    .project-stack span {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      color: var(--ink-soft);
     }
 
     .project-link {
-      display: inline-block;
-      padding: 8px 16px;
-      background: rgba(0, 217, 255, 0.15);
-      color: var(--cyan);
-      border: 1px solid var(--cyan);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .project-link:hover {
-      background: var(--cyan);
-      color: var(--bg-dark);
-      transform: translateX(4px);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .skill-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .skill-card:hover {
-      border-color: var(--border-hover);
-      background: var(--bg-hover);
-      transform: translateY(-4px);
-    }
-
-    .skill-card h3 {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 1.2rem;
-    }
-
-    .skill-row {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--ink);
+      align-self: flex-start;
+      transition: color .25s, border-color .25s, gap .25s;
+    }
+    .project-link:hover {
+      color: var(--forest);
+      border-color: var(--bronze);
+      gap: 14px;
     }
 
-    .skill-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .skill-name {
-      font-size: 0.9rem;
-      min-width: 100px;
-      font-weight: 500;
-    }
-
-    .skill-bar {
-      flex: 1;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .skill-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--cyan), var(--lime));
-      border-radius: 2px;
-    }
-
-    .skill-lv {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      min-width: 55px;
-      text-align: right;
-      font-weight: 500;
-    }
-
-    /* ── EXPERIENCE ── */
-    .exp-item {
+    /* ─────────────────────────────
+       EXPERIENCE
+       ───────────────────────────── */
+    .timeline {
       display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: all 0.3s ease;
+      gap: 0;
     }
-
-    .exp-item:last-child {
-      border-bottom: none;
+    .timeline-group + .timeline-group { margin-top: clamp(2.5rem, 5vw, 4rem); }
+    .timeline-label {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 0.5rem;
     }
-
-    .exp-item:hover {
-      padding-left: 1rem;
+    .timeline-label::before {
+      content: '';
+      width: 36px; height: 1px;
+      background: var(--bronze);
+      transform: translateY(-3px);
     }
+    .timeline-group h3.timeline-heading {
+      font-family: var(--display);
+      font-weight: 350;
+      font-style: italic;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
+    }
+    .exp {
+      display: grid;
+      grid-template-columns: 160px 1fr 1fr;
+      gap: clamp(1rem, 4vw, 3rem);
+      padding: 2.4rem 0;
+      border-top: 1px solid var(--rule);
+      align-items: start;
+      position: relative;
+    }
+    .exp:last-child { border-bottom: 1px solid var(--rule); }
+    .exp:hover { background: rgba(122,149,128,.05); }
+    .exp::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 0;
+      width: 0; height: 1px;
+      background: var(--bronze);
+      transition: width .8s cubic-bezier(.2,.7,.2,1);
+    }
+    .exp:hover::before { width: 100%; }
 
     .exp-date {
-      font-size: 0.8rem;
-      color: var(--cyan);
-      font-weight: 600;
-      padding-top: 2px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      padding-top: 6px;
     }
-
-    .exp-role {
-      font-size: 1.05rem;
-      font-weight: 700;
+    .exp-date strong {
+      display: block;
+      color: var(--bronze);
+      font-weight: 500;
       margin-bottom: 4px;
-      color: var(--text-primary);
+      font-size: 0.65rem;
     }
 
-    .exp-org {
-      font-size: 0.9rem;
-      color: var(--lime);
-      margin-bottom: 0.8rem;
-      font-weight: 600;
+    .exp-role h3 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      font-variation-settings: "opsz" 96, "SOFT" 60, "WONK" 1;
+      margin-bottom: 6px;
+    }
+    .exp-role p.org {
+      font-size: 0.88rem;
+      color: var(--forest);
+      font-style: italic;
+      font-family: var(--display);
+      font-weight: 350;
     }
 
     .exp-tasks {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
     }
-
     .exp-tasks li {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      padding-left: 16px;
+      padding-left: 22px;
       position: relative;
-      line-height: 1.6;
+    }
+    .exp-tasks li::before {
+      content: '—';
+      position: absolute;
+      left: 0; top: 0;
+      color: var(--bronze);
+      font-family: var(--mono);
     }
 
-    .exp-tasks li::before {
+    /* ─────────────────────────────
+       SKILLS
+       ───────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      position: relative;
+    }
+    .skill-card h3 {
+      font-family: var(--display);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+      font-variation-settings: "opsz" 36, "SOFT" 100, "WONK" 1;
+      letter-spacing: -0.01em;
+    }
+    .skill-card h3::before {
+      content: attr(data-num);
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: var(--bronze);
+      margin-right: 10px;
+      vertical-align: middle;
+      font-style: normal;
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .skill-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .skill-row:first-child { padding-top: 0; }
+
+    .skill-name {
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .skill-level {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .skill-pips {
+      display: inline-flex;
+      gap: 3px;
+    }
+    .skill-pips i {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(21,32,27,.12);
+      display: inline-block;
+    }
+    .skill-pips i.on { background: var(--forest); }
+    .skill-pips i.bronze { background: var(--bronze); }
+
+    /* ─────────────────────────────
+       CONTACT
+       ───────────────────────────── */
+    #contacto {
+      background: var(--forest);
+      color: var(--paper);
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      margin-top: clamp(4rem, 8vw, 6rem);
+      position: relative;
+      overflow: hidden;
+    }
+    #contacto::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
+      inset: 0;
+      background:
+        radial-gradient(60% 80% at 90% 10%, rgba(168,124,79,.18), transparent 60%),
+        radial-gradient(50% 70% at 10% 100%, rgba(122,149,128,.18), transparent 60%);
+      pointer-events: none;
     }
+    #contacto .shell { position: relative; }
 
-    @media (max-width: 768px) {
-      .exp-item {
-        grid-template-columns: 1fr;
-        gap: 0.5rem;
-      }
-    }
+    #contacto .section-num { color: var(--bronze-soft); border-color: var(--bronze-soft); }
 
-    /* ── CONTACT ── */
-    #contacto {
-      background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(0, 255, 136, 0.02));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      max-width: 100%;
-      padding: 4rem 2.5rem;
-      text-align: center;
-      margin: 0;
-    }
-
-    #contacto .section-label {
-      color: var(--lime);
-    }
-
-    #contacto .section-title {
-      color: var(--text-primary);
-    }
-
-    #contacto p {
-      color: var(--text-secondary);
+    .contact-display {
+      font-family: var(--display);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 7vw, 5.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.035em;
+      color: var(--paper);
       margin-bottom: 2rem;
+      font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+    }
+    .contact-display em {
+      font-style: italic;
+      color: var(--bronze-soft);
+      font-weight: 350;
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: end;
+      margin-top: 3rem;
+    }
+    .contact-lead {
       font-size: 1.05rem;
+      line-height: 1.65;
+      color: rgba(242,237,224,0.78);
+      max-width: 44ch;
     }
 
-    #contacto .btn-row {
-      justify-content: center;
+    .contact-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .contact-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 14px 0;
+      border-top: 1px solid rgba(242,237,224,.14);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--paper);
+    }
+    .contact-line:last-child { border-bottom: 1px solid rgba(242,237,224,.14); }
+    .contact-line span:first-child {
+      color: var(--bronze-soft);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.66rem;
+    }
+    .contact-line a:hover { color: var(--bronze-soft); }
+
+    .contact-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 2.4rem;
+    }
+    #contacto .btn {
+      border-color: rgba(242,237,224,.35);
+      color: var(--paper);
+    }
+    #contacto .btn:hover {
+      background: var(--paper);
+      color: var(--forest-deep);
+      border-color: var(--paper);
+    }
+    #contacto .btn-primary {
+      background: var(--bronze);
+      border-color: var(--bronze);
+      color: var(--forest-deep);
+    }
+    #contacto .btn-primary:hover {
+      background: var(--bronze-soft);
+      border-color: var(--bronze-soft);
     }
 
-    /* ── FOOTER ── */
+    /* ─────────────────────────────
+       FOOTER
+       ───────────────────────────── */
     footer {
-      background: rgba(15, 15, 18, 0.5);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-top: 4rem;
+      background: var(--forest-deep);
+      color: rgba(242,237,224,.55);
+      padding: 28px clamp(1.25rem, 4vw, 3rem);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-top: 1px solid rgba(242,237,224,.08);
+    }
+    footer a:hover { color: var(--bronze-soft); }
+
+    /* ─────────────────────────────
+       MOTION
+       ───────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* hero stagger on first paint */
+    .hero-meta, h1.hero-name, .hero-tagline, .hero-bottom {
+      animation: rise .9s cubic-bezier(.2,.7,.2,1) both;
+    }
+    .hero-meta     { animation-delay: .05s; }
+    h1.hero-name   { animation-delay: .15s; }
+    .hero-tagline  { animation-delay: .35s; }
+    .hero-bottom   { animation-delay: .55s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      section { padding: 4rem 2rem; }
-    }
-
-    @media (max-width: 768px) {
-      section { padding: 3rem 1.5rem; }
+    /* ─────────────────────────────
+       RESPONSIVE
+       ───────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-status { font-size: 0.65rem; }
+      .section-head { grid-template-columns: 1fr; gap: 1rem; }
+      .section-kicker { grid-column: 1; }
+      .hero-meta { grid-template-columns: repeat(2, 1fr); }
+      .hero-bottom { grid-template-columns: 1fr; }
+      .project, .project.feature { grid-column: span 12; grid-template-columns: 1fr; }
+      .project.feature .project-media { min-height: 280px; }
+      .exp { grid-template-columns: 1fr; gap: 0.75rem; }
+      .exp-date { padding-top: 0; }
       .skills-grid { grid-template-columns: 1fr; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .bento-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="#hero">MC</a>
+  <!-- ───── NAV ───── -->
+  <nav class="topbar">
+    <a class="crest" href="#hero">
+      <span class="seal" aria-hidden="true"></span>
+      Mario Castrejón
+      <small>est. 2026</small>
+    </a>
     <ul class="nav-links">
-      <li><a href="#sobre-mi">Sobre mí</a></li>
-      <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="#experiencia">Experiencia</a></li>
-      <li><a href="#habilidades">Habilidades</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#proyectos"><span class="num">01</span>Proyectos</a></li>
+      <li><a href="#experiencia"><span class="num">02</span>Trayectoria</a></li>
+      <li><a href="#habilidades"><span class="num">03</span>Disciplinas</a></li>
+      <li><a href="#contacto"><span class="num">04</span>Contacto</a></li>
     </ul>
+    <span class="nav-status">
+      <span class="dot"></span>
+      Disponible
+    </span>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-grid">
-      <div>
-        <div class="available-badge">
-          <span class="available-dot"></span>
-          Disponibilidad inmediata
+  <main>
+
+    <!-- ───── HERO ───── -->
+    <section id="hero">
+      <div class="shell">
+
+        <div class="hero-meta">
+          <div><span>Rol</span><span>Asistencia a la Dirección</span></div>
+          <div><span>Sede</span><span>Toledo · España</span></div>
+          <div><span>Idiomas</span><span>Inglés B2</span></div>
+          <div><span>Estado</span><span>Incorporación inmediata</span></div>
         </div>
-        <h1>Mario<br>Castrejón<br>Martín</h1>
-        <p class="hero-subtitle">Administrativo · Asistente de Dirección</p>
-        <p class="hero-desc">
-          Técnico Superior en Asistencia a la Dirección con formación en Gestión Administrativa.
-          Competente en gestión documental, soporte directivo y atención al cliente.
-          Inglés B2 y dominio avanzado del paquete Office.
-        </p>
-        <div class="hero-contacts">
-          <span class="contact-item">
-            <span class="contact-dot"></span>
-            mariocastrejonm@gmail.com
-          </span>
-          <span class="contact-item">
-            <span class="contact-dot"></span>
-            653 06 81 71
-          </span>
-          <span class="contact-item">
-            <span class="contact-dot"></span>
-            Toledo, España
-          </span>
-        </div>
-        <div class="btn-row">
-          <a class="btn btn-primary" href="#contacto">Contactar →</a>
-          <a class="btn" href="#proyectos">Ver proyectos</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- SOBRE MÍ -->
-  <section id="sobre-mi" class="about-section">
-    <p class="section-label">Acerca de</p>
-    <h2 class="section-title">¿Quién soy?</h2>
-    
-    <div class="bento-grid">
-      <div class="bento-item">
-        <div class="bento-title">📚 Formación</div>
-        <div class="bento-desc">Técnico Superior en Asistencia a la Dirección (2022-2024) y Técnico en Gestión Administrativa (2020-2022). Especialización en Office y gestión empresarial.</div>
-      </div>
+        <div class="hero-grid">
+          <h1 class="hero-name">
+            Mario<br>
+            <span class="accent">Castrejón</span><br>
+            Martín
+          </h1>
 
-      <div class="bento-item">
-        <div class="bento-title">🎯 Especialidad</div>
-        <div class="bento-desc">Gestión documental, organización de eventos, comunicación empresarial, soporte directivo y atención al cliente de calidad.</div>
-      </div>
-
-      <div class="bento-item">
-        <div class="bento-title">🌐 Idiomas</div>
-        <div class="bento-desc">Español nativo. Inglés B2 con certificación y capacidad de comunicación profesional fluida.</div>
-      </div>
-
-      <div class="bento-item">
-        <div class="bento-title">💻 Tecnología</div>
-        <div class="bento-desc">Dominio avanzado de Office (Word, Excel, Outlook, PowerPoint). Experiencia con tramites online, IA generativa y herramientas de automatización.</div>
-      </div>
-
-      <div class="bento-item">
-        <div class="bento-title">🎓 Experiencia</div>
-        <div class="bento-desc">Administrativo en Colegio de Gestores Administrativos (Talavera de la Reina, 2024). Gestión de documentación, atención al cliente y tramitación administrativa.</div>
-      </div>
-
-      <div class="bento-item">
-        <div class="bento-title">📍 Ubicación</div>
-        <div class="bento-desc">Toledo, España. Disponible para oportunidades presenciales, híbridas y 100% remotas a nivel nacional e internacional.</div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- PROYECTOS -->
-  <section id="proyectos">
-    <p class="section-label">Portafolio</p>
-    <h2 class="section-title">Proyectos destacados</h2>
-
-    <div class="projects-grid">
-
-      <!-- NutrIA -->
-      <div class="project-card">
-        <div class="project-video-wrap">
-          <img src="NutrIALogo.png" alt="NutrIA Logo" />
-        </div>
-        <div class="project-body">
-          <span class="project-tag">Aplicación · IA · Python</span>
-          <h3 class="project-title">NutrIA</h3>
-          <p class="project-desc">
-            Asistente inteligente de nutrición impulsado por IA. Proporciona recomendaciones personalizadas y análisis nutricionales basados en Claude API.
+          <p class="hero-tagline">
+            <span>Gestión administrativa con método</span>
+            <span class="sep"></span>
+            <span>obra hecha con criterio</span>
           </p>
-          <a href="https://nutrition-gpt.onrender.com/" target="_blank" class="project-link">Visitar aplicación →</a>
         </div>
-      </div>
 
-      <!-- Video Portfolio -->
-      <div class="project-card">
-        <div class="project-video-wrap">
-          <iframe 
-            src="https://www.youtube.com/embed/b-hrqT68w6A" 
-            title="YouTube video player" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="project-body">
-          <span class="project-tag">Vídeo · Presentación · YouTube</span>
-          <h3 class="project-title">Presentación Audiovisual</h3>
-          <p class="project-desc">
-            Visualización audiovisual de mis capacidades, proyectos y trayectoria profesional a través de contenido en vídeo de calidad.
+        <div class="hero-bottom">
+          <p class="hero-desc">
+            Técnico Superior en <strong>Asistencia a la Dirección</strong> con base sólida en Gestión Administrativa.
+            Trabajo el detalle: gestión documental, soporte directivo, atención al cliente y
+            <strong>automatización de procesos con IA</strong>. Office avanzado, inglés B2 y método discreto.
           </p>
-          <a href="https://www.youtube.com/watch?v=b-hrqT68w6A" target="_blank" class="project-link">Ver vídeo →</a>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#proyectos">
+              Ver proyectos <span class="arrow">↗</span>
+            </a>
+            <span class="ghost-line">
+              o escríbeme directamente — <a href="mailto:mariocastrejonm@gmail.com">mariocastrejonm@gmail.com</a>
+            </span>
+          </div>
         </div>
+
       </div>
 
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- EXPERIENCIA -->
-  <section id="experiencia">
-    <p class="section-label">Trayectoria</p>
-    <h2 class="section-title">Experiencia y formación</h2>
-
-    <div class="exp-item">
-      <span class="exp-date">Ene 2024 – Mar 2024</span>
-      <div>
-        <p class="exp-role">Administrativo</p>
-        <p class="exp-org">Colegio de Gestores Administrativos · Talavera de la Reina</p>
-        <ul class="exp-tasks">
-          <li>Gestión y archivo de documentación administrativa y expedientes de clientes</li>
-          <li>Atención presencial y telefónica a clientes y proveedores</li>
-          <li>Apoyo en tramitación de gestiones ante organismos públicos</li>
-          <li>Elaboración de informes y correspondencia con Microsoft Office</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item">
-      <span class="exp-date">2022 – 2024</span>
-      <div>
-        <p class="exp-role">Técnico Superior en Asistencia a la Dirección</p>
-        <p class="exp-org">Formación Profesional Grado Superior</p>
-        <ul class="exp-tasks">
-          <li>Gestión de agenda directiva y comunicación empresarial</li>
-          <li>Organización de eventos y recursos humanos</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="exp-item">
-      <span class="exp-date">2020 – 2022</span>
-      <div>
-        <p class="exp-role">Técnico en Gestión Administrativa</p>
-        <p class="exp-org">Formación Profesional Grado Medio</p>
-        <ul class="exp-tasks">
-          <li>Contabilidad básica, facturación y gestión documental</li>
-          <li>Atención al cliente y administración de oficina</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- HABILIDADES -->
-  <section id="habilidades">
-    <p class="section-label">Competencias</p>
-    <h2 class="section-title">Habilidades</h2>
-
-    <div class="skills-grid">
-      <div class="skill-card">
-        <h3>Herramientas Office</h3>
-        <div class="skill-row">
-          <span class="skill-name">Word</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-          <span class="skill-lv">Avanzado</span>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Excel</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-          <span class="skill-lv">Avanzado</span>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Outlook</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-          <span class="skill-lv">Avanzado</span>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">PowerPoint</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-          <span class="skill-lv">Avanzado</span>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Access</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 35%;"></div></div>
-          <span class="skill-lv">Básico</span>
+      <!-- marquee -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Gestión documental <i class="dot"></i> Soporte ejecutivo <i class="dot"></i> Automatización IA <i class="dot"></i> Atención al cliente <i class="dot"></i> Office avanzado <i class="dot"></i> Trámites online <i class="dot"></i></span>
+          <span>Gestión documental <i class="dot"></i> Soporte ejecutivo <i class="dot"></i> Automatización IA <i class="dot"></i> Atención al cliente <i class="dot"></i> Office avanzado <i class="dot"></i> Trámites online <i class="dot"></i></span>
         </div>
       </div>
+    </section>
 
-      <div class="skill-card">
-        <h3>Idiomas</h3>
-        <div class="skill-row">
-          <span class="skill-name">Español</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 100%;"></div></div>
-          <span class="skill-lv">Nativo</span>
+    <!-- ───── PROYECTOS ───── -->
+    <section id="proyectos">
+      <div class="shell">
+        <div class="section-head reveal">
+          <span class="section-num">01 · Selección</span>
+          <h2 class="section-title">Proyectos <em>seleccionados</em></h2>
+          <p class="section-kicker">
+            Una pequeña muestra de iniciativas en las que he combinado oficio administrativo,
+            herramientas modernas e inteligencia artificial para resolver un problema concreto.
+          </p>
         </div>
-        <div class="skill-row">
-          <span class="skill-name">Inglés</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 72%;"></div></div>
-          <span class="skill-lv">B2</span>
+
+        <div class="projects-grid">
+
+          <!-- FEATURED: Email automation flow -->
+          <article class="project feature reveal">
+            <div class="project-media flow">
+              <img src="automatizacion-emails.png" alt="Diagrama del flujo de automatización: Gmail → Tools → OpenAI → Router con departamentos (Ventas, Soporte, Facturación, Otro) → Google Sheets clasificadas por prioridad" />
+            </div>
+            <div class="project-body">
+              <div>
+                <div class="project-meta-row">
+                  <span class="pill">Automatización · IA</span>
+                  <span>2026 · Caso real</span>
+                </div>
+                <h3 class="project-title">Triage <em>inteligente</em> de correo corporativo</h3>
+                <p class="project-desc">
+                  Flujo end-to-end que captura cada email entrante en Gmail, lo analiza con OpenAI
+                  (ChatGPT / Whisper) para identificar intención y prioridad, y lo enruta automáticamente
+                  al equipo correspondiente —Ventas, Soporte, Facturación o Otros— registrándolo en
+                  Google Sheets segmentadas por nivel de urgencia (Alta · Media · Baja).
+                  Reduce el tiempo de clasificación manual y garantiza que ningún correo crítico se pierda.
+                </p>
+                <div class="project-stack">
+                  <span>Gmail API</span>
+                  <span>OpenAI</span>
+                  <span>Whisper</span>
+                  <span>Make / n8n</span>
+                  <span>Google Sheets</span>
+                  <span>Routing condicional</span>
+                </div>
+              </div>
+              <a class="project-link" href="#">Detalles del flujo <span>→</span></a>
+            </div>
+          </article>
+
+          <!-- NutIA -->
+          <article class="project reveal">
+            <div class="project-media gradient-nutria">
+              <img src="NutrIALogo.png" alt="Logotipo de NutIA" />
+            </div>
+            <div class="project-body">
+              <div>
+                <div class="project-meta-row">
+                  <span class="pill">Aplicación · IA</span>
+                  <span>2026 — Live</span>
+                </div>
+                <h3 class="project-title">Nut<em>IA</em> · asistente nutricional</h3>
+                <p class="project-desc">
+                  Asistente conversacional que ofrece análisis y recomendaciones nutricionales
+                  personalizadas a partir de un sencillo intercambio en lenguaje natural.
+                </p>
+                <div class="project-stack">
+                  <span>OpenAI</span>
+                  <span>Render</span>
+                  <span>Web</span>
+                </div>
+              </div>
+              <a class="project-link" href="https://nutrition-gpt.onrender.com/" target="_blank" rel="noopener">
+                Visitar aplicación <span>↗</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Video -->
+          <article class="project reveal">
+            <a class="video-thumb project-media" href="https://www.youtube.com/watch?v=b-hrqT68w6A" target="_blank" rel="noopener" aria-label="Reproducir vídeo en YouTube">
+              <img src="https://i.ytimg.com/vi/b-hrqT68w6A/maxresdefault.jpg"
+                   onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/b-hrqT68w6A/hqdefault.jpg';"
+                   alt="Miniatura del vídeo con avatar creado por Mario Castrejón" />
+              <span class="label">YouTube</span>
+              <span class="play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+            </a>
+            <div class="project-body">
+              <div>
+                <div class="project-meta-row">
+                  <span class="pill">Vídeo · Avatar IA</span>
+                  <span>YouTube</span>
+                </div>
+                <h3 class="project-title">Vídeo con <em>avatar</em> propio</h3>
+                <p class="project-desc">
+                  Vídeo creado por mí en el que utilizo un avatar digital para presentarme
+                  y mostrar mi perfil profesional de forma cercana. Trabajé el guion,
+                  la voz y el montaje completo apoyándome en herramientas de IA generativa,
+                  obteniendo una pieza breve, natural y con un acabado pulido —pensada
+                  para acompañar este portfolio y dar una primera impresión más humana
+                  que un simple currículum.
+                </p>
+                <div class="project-stack">
+                  <span>Avatar IA</span>
+                  <span>Guion</span>
+                  <span>Edición</span>
+                </div>
+              </div>
+              <a class="project-link" href="https://www.youtube.com/watch?v=b-hrqT68w6A" target="_blank" rel="noopener">
+                Reproducir en YouTube <span>↗</span>
+              </a>
+            </div>
+          </article>
+
         </div>
       </div>
+    </section>
 
-      <div class="skill-card">
-        <h3>Competencias personales</h3>
-        <div class="skill-row">
-          <span class="skill-name">Organización</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
-          <span class="skill-lv">Alta</span>
+    <!-- ───── EXPERIENCIA ───── -->
+    <section id="experiencia">
+      <div class="shell">
+        <div class="section-head reveal">
+          <span class="section-num">02 · Trayectoria</span>
+          <h2 class="section-title">Experiencia <em>y formación</em></h2>
         </div>
-        <div class="skill-row">
-          <span class="skill-name">Atención al detalle</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
-          <span class="skill-lv">Alta</span>
+
+        <div class="timeline-group">
+          <span class="timeline-label">I · Experiencia profesional</span>
+          <h3 class="timeline-heading">En el puesto</h3>
+          <div class="timeline">
+
+            <article class="exp">
+              <div class="exp-date"><strong>2024</strong>Ene — Mar</div>
+              <div class="exp-role">
+                <h3>Administrativo</h3>
+                <p class="org">Colegio de Gestores Administrativos · Talavera de la Reina</p>
+              </div>
+              <ul class="exp-tasks">
+                <li>Gestión y archivo documental, expedientes de cliente y registro confidencial.</li>
+                <li>Atención presencial y telefónica a clientes y proveedores con tono profesional.</li>
+                <li>Apoyo en tramitación ante organismos públicos (AEAT, Seguridad Social, ayuntamientos).</li>
+                <li>Elaboración de informes, plantillas y correspondencia con Microsoft Office.</li>
+              </ul>
+            </article>
+
+          </div>
         </div>
-        <div class="skill-row">
-          <span class="skill-name">Comunicación</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 88%;"></div></div>
-          <span class="skill-lv">Alta</span>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Adaptabilidad</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-          <span class="skill-lv">Alta</span>
+
+        <div class="timeline-group">
+          <span class="timeline-label">II · Formación académica</span>
+          <h3 class="timeline-heading">En el aula</h3>
+          <div class="timeline">
+
+            <article class="exp">
+              <div class="exp-date"><strong>2022 — 2024</strong>FP Grado Superior</div>
+              <div class="exp-role">
+                <h3>Técnico Superior en Asistencia a la Dirección</h3>
+                <p class="org">Formación Profesional · Grado Superior</p>
+              </div>
+              <ul class="exp-tasks">
+                <li>Gestión avanzada de agenda directiva y comunicación empresarial.</li>
+                <li>Organización de reuniones, eventos y logística de equipos.</li>
+                <li>Protocolo, recursos humanos y manejo de información sensible.</li>
+              </ul>
+            </article>
+
+            <article class="exp">
+              <div class="exp-date"><strong>2020 — 2022</strong>FP Grado Medio</div>
+              <div class="exp-role">
+                <h3>Técnico en Gestión Administrativa</h3>
+                <p class="org">Formación Profesional · Grado Medio</p>
+              </div>
+              <ul class="exp-tasks">
+                <li>Contabilidad básica, facturación y gestión documental cotidiana.</li>
+                <li>Atención al cliente y administración integral de oficina.</li>
+              </ul>
+            </article>
+
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="skill-card">
-        <h3>Tecnología y herramientas</h3>
-        <div class="skill-row">
-          <span class="skill-name">Trámites online</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
-          <span class="skill-lv">Avanzado</span>
+    <!-- ───── HABILIDADES ───── -->
+    <section id="habilidades">
+      <div class="shell">
+        <div class="section-head reveal">
+          <span class="section-num">03 · Disciplinas</span>
+          <h2 class="section-title">Habilidades <em>y herramientas</em></h2>
+          <p class="section-kicker">
+            Un repertorio que combina ofimática avanzada, comunicación bilingüe
+            y la curiosidad necesaria para incorporar IA al día a día administrativo.
+          </p>
         </div>
-        <div class="skill-row">
-          <span class="skill-name">IA generativa</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 75%;"></div></div>
-          <span class="skill-lv">Medio</span>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Automatización</span>
-          <div class="skill-bar"><div class="skill-fill" style="width: 65%;"></div></div>
-          <span class="skill-lv">Medio</span>
+
+        <div class="skills-grid">
+
+          <div class="skill-card reveal">
+            <h3 data-num="A.">Microsoft Office</h3>
+            <div class="skill-row"><span class="skill-name">Word</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Avanzado</span></div>
+            <div class="skill-row"><span class="skill-name">Excel</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Avanzado</span></div>
+            <div class="skill-row"><span class="skill-name">Outlook</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Avanzado</span></div>
+            <div class="skill-row"><span class="skill-name">PowerPoint</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Avanzado</span></div>
+            <div class="skill-row"><span class="skill-name">Access</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>Básico</span></div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 data-num="B.">Idiomas</h3>
+            <div class="skill-row"><span class="skill-name">Español</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Nativo</span></div>
+            <div class="skill-row"><span class="skill-name">Inglés</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>B2</span></div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 data-num="C.">Competencias personales</h3>
+            <div class="skill-row"><span class="skill-name">Organización</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Alta</span></div>
+            <div class="skill-row"><span class="skill-name">Atención al detalle</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Alta</span></div>
+            <div class="skill-row"><span class="skill-name">Comunicación</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>Alta</span></div>
+            <div class="skill-row"><span class="skill-name">Adaptabilidad</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>Alta</span></div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3 data-num="D.">Tecnología & IA</h3>
+            <div class="skill-row"><span class="skill-name">Trámites online</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Avanzado</span></div>
+            <div class="skill-row"><span class="skill-name">IA generativa</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i class="bronze"></i><i></i></span>Medio-alto</span></div>
+            <div class="skill-row"><span class="skill-name">Automatización (Make · n8n)</span><span class="skill-level"><span class="skill-pips"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>Medio</span></div>
+          </div>
+
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <p class="section-label">Contacto</p>
-    <h2 class="section-title">Hablemos</h2>
-    <p>¿Tienes una oferta o propuesta? Estoy disponible de inmediato para discutir nuevas oportunidades.</p>
-    <div class="btn-row" style="justify-content: center;">
-      <a class="btn btn-primary" href="mailto:mariocastrejonm@gmail.com">Enviar correo →</a>
-      <a class="btn" href="tel:+34653068171">Llamar · 653 06 81 71</a>
-    </div>
-  </section>
+    <!-- ───── CONTACTO ───── -->
+    <section id="contacto">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">04 · Diálogo</span>
+          <h2 class="section-title contact-display">
+            Hablemos <em>en privado</em>.<br>
+            La puerta está abierta.
+          </h2>
+        </div>
+
+        <div class="contact-grid">
+          <p class="contact-lead">
+            Si buscas a alguien que tome la asistencia a la dirección con la seriedad
+            de un oficio y la apertura de quien sabe que la tecnología puede ayudar,
+            escríbeme. Respondo el mismo día.
+          </p>
+
+          <div class="contact-lines">
+            <div class="contact-line">
+              <span>Correo</span>
+              <a href="mailto:mariocastrejonm@gmail.com">mariocastrejonm@gmail.com</a>
+            </div>
+            <div class="contact-line">
+              <span>Teléfono</span>
+              <a href="tel:+34653068171">+34 653 06 81 71</a>
+            </div>
+            <div class="contact-line">
+              <span>Ubicación</span>
+              <span>Toledo · España</span>
+            </div>
+            <div class="contact-line">
+              <span>Disponibilidad</span>
+              <span>Inmediata · Presencial / Híbrido</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-cta">
+          <a class="btn btn-primary" href="mailto:mariocastrejonm@gmail.com">
+            Enviar correo <span class="arrow">↗</span>
+          </a>
+          <a class="btn" href="tel:+34653068171">
+            Llamar <span class="arrow">↗</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
 
   <footer>
-    © 2026 Mario Castrejón Martín · Toledo, España
+    <span>© 2026 Mario Castrejón Martín</span>
+    <span>Toledo · España</span>
+    <span>Construido con esmero · 2026</span>
   </footer>
 
   <script>
-    // Animación suave de scroll
-    document.querySelectorAll(".nav-links a").forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute("href");
-        const target = document.querySelector(targetId);
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth" });
+    // Reveal-on-scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
         }
       });
-    });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-    // Efecto hover en experiencia
-    document.querySelectorAll(".exp-item").forEach((item) => {
-      item.addEventListener("mouseenter", () => {
-        item.style.paddingLeft = "1rem";
-      });
-      item.addEventListener("mouseleave", () => {
-        item.style.paddingLeft = "0";
-      });
-    });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 
 </body>
