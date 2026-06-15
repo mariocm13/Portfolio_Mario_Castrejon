@@ -1058,6 +1058,38 @@
 
         <div class="projects-grid">
 
+          <!-- FEATURED: Invoice processor (Make) -->
+          <article class="project feature reveal">
+            <div class="project-media flow">
+              <img src="procesador-facturas-make.png" alt="Escenario de Make 'Procesador Facturas v4.2': Gmail (vigila correos) → lista adjuntos → Array aggregator → agente de IA de Make → Router de 3 vías (es factura → Google Sheets añade fila y Gmail etiqueta; no es factura → Gmail etiqueta)" />
+            </div>
+            <div class="project-body">
+              <div>
+                <div class="project-meta-row">
+                  <span class="pill">Automatización · IA</span>
+                  <span>2026 · Caso real</span>
+                </div>
+                <h3 class="project-title">Procesador de <em>facturas</em> automático</h3>
+                <p class="project-desc">
+                  Escenario en Make.com que vigila la bandeja de Gmail, analiza cada correo con
+                  un agente de IA para determinar si es una factura y, en caso afirmativo, extrae
+                  los datos requeridos y añade una fila en Google Sheets. Incluye un Router de tres
+                  vías (es factura · no es factura), etiquetado automático de los correos en Gmail
+                  y un diseño idempotente que evita duplicar registros aunque el flujo se ejecute
+                  repetidamente.
+                </p>
+                <div class="project-stack">
+                  <span>Gmail API</span>
+                  <span>Make AI Agents</span>
+                  <span>Router</span>
+                  <span>Google Sheets</span>
+                  <span>Idempotencia</span>
+                </div>
+              </div>
+              <a class="project-link" href="#">Detalles del flujo <span>→</span></a>
+            </div>
+          </article>
+
           <!-- FEATURED: Email automation flow -->
           <article class="project feature reveal">
             <div class="project-media flow">
